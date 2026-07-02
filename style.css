@@ -1,0 +1,217 @@
+/*
+ * vivliostyle-theme-tategaki-nidan
+ * 縦書きA5二段組・右綴じ 同人小説用 Vivliostyle テーマ
+ *
+ * 想定: 中綴じ（コピー本/オンデマンド印刷）の小説同人誌。
+ * 二段組（上段・下段）は段間に余白を入れる一般的な文庫・同人小説の体裁。
+ * 綴じ側/小口側でマージンを変えるような複雑な左右ページ分岐は、
+ * 中綴じ製本では印刷所の面付けソフト側で吸収されるため入れていない。
+ * 上下2ページ（見開き）で余白を変えたい場合のみ @page :left / :right を追加すること。
+ */
+
+@page {
+  size: A5;
+  margin: 20mm 16mm 18mm 16mm;
+
+  /* ノンブル（ページ番号）。中央下に縦書きで小さく配置。
+     text-orientation: mixed だと数字が90度回転して寝てしまうため、
+     upright で数字を寝かさず立てたまま縦に並べる（複数桁は1桁ずつ縦に積む） */
+  @bottom-center {
+    content: counter(page);
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 8pt;
+    font-family: serif;
+  }
+}
+
+/* 表紙・扉・奥付などページ内で明示的に .no-folio を付けたページはノンブルを消す */
+@page no-folio {
+  @bottom-center {
+    content: "";
+  }
+}
+
+:root {
+  --text-color: #1a1a1a;
+  --font-serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho",
+    "YuMincho", "Noto Serif JP", serif;
+}
+
+html {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+body {
+  writing-mode: vertical-rl;
+  font-family: var(--font-serif);
+  color: var(--text-color);
+  font-size: 9.5pt;
+  line-height: 2;
+  letter-spacing: 0.05em;
+
+  /* 二段組（上段・下段）。vertical-rl では columns は行送り方向（縦方向）に
+     沿って積まれるため、上段→下段の順に段が並ぶ。
+     column-rule は Chromium で column-span:all 要素（扉・奥付・挿絵）を貫通して
+     描画されるバグがあるため使わず、余白のみで段を区切る */
+  columns: 2;
+  column-gap: 9mm;
+  column-fill: auto;
+
+  height: 100%;
+  margin: 0;
+}
+
+/* 本文段落。原稿では行頭に全角スペースを直接入れる運用のため
+   text-indent は付けない（二重字下げ防止） */
+p {
+  margin: 0;
+  padding: 0;
+}
+
+/* 章タイトル (# 見出し) */
+h1 {
+  font-size: 15pt;
+  line-height: 1.8;
+  letter-spacing: 0.3em;
+  margin: 0 0 2em 1em;
+  break-after: avoid;
+}
+
+h2 {
+  font-size: 12pt;
+  letter-spacing: 0.2em;
+  margin: 2em 0 1em;
+  break-after: avoid;
+}
+
+/* 場面転換 (Markdown の "---") を中黒3つの目印に置き換える。
+   罫線ではなく中央揃えの記号にすることで縦書きでも違和感が出ない。
+   vertical-rl では行送り（段の積み重ね）方向は物理的に左右方向なので、
+   前後の余白は margin-top/bottom ではなく margin-block（論理プロパティ）で
+   指定する。margin-top/bottom を使うと行内方向の余白にしかならず、
+   前後の空きがほとんど付かない */
+hr {
+  border: none;
+  margin-block: 3em;
+  margin-inline: 0;
+  break-inside: avoid;
+  text-align: center;
+  font-size: 9pt;
+  letter-spacing: 0.4em;
+}
+
+hr::after {
+  content: "＊　＊　＊";
+}
+
+/* 会話文の鉤括弧などが段や行の先頭に来たときの浮き禁止・追い出し崩れを防ぐ */
+p, h1, h2 {
+  text-align: justify;
+}
+
+/* ルビ (VFM の {漢字|かんじ} 記法が <ruby><rt> に変換される) */
+rt {
+  font-size: 0.5em;
+}
+
+/* 縦中横ユーティリティ（「12」のような半角数字を横並びにしたいときに使う）
+   例: <span class="tcy">19</span>時 */
+.tcy {
+  text-combine-upright: all;
+}
+
+/* 挿絵。alt テキスト付きの画像単独行は VFM が <figure><figcaption> に包む。
+   段組をまたいで全幅に見せるため column-span: all にする */
+figure {
+  column-span: all;
+  margin: 2em 0;
+  text-align: center;
+  break-inside: avoid;
+}
+
+figure img {
+  max-width: 100%;
+  max-height: 90%;
+}
+
+figcaption {
+  margin-top: 0.5em;
+  font-size: 8pt;
+  color: #666;
+}
+
+/* alt なしでインライン挿入した画像 (<p><img></p> のまま、キャプション無し) */
+p > img {
+  display: block;
+  max-width: 100%;
+  margin: 1em auto;
+}
+
+/* 強制改ページ用ユーティリティ。本文中に生の HTML で
+   <div class="page-break"></div> と書くと、そこから新しいページになる */
+.page-break {
+  break-before: page;
+}
+
+/* 表紙・扉・奥付ページ共通。
+   body の二段組（上段・下段）の中の1段だけを占有すると、もう片方の段が
+   空のまま余白ができてしまうため、column-span: all で
+   本文の段組から切り離し、ページ全体を使う単一ブロックにする */
+.frontmatter,
+.backmatter {
+  writing-mode: vertical-rl;
+  column-span: all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  break-after: page;
+  page: no-folio;
+}
+
+.title-block {
+  text-align: center;
+}
+
+.title-block .main-title {
+  font-size: 22pt;
+  letter-spacing: 0.4em;
+  margin: 0 0 1.5em;
+}
+
+.title-block .subtitle {
+  font-size: 11pt;
+  letter-spacing: 0.2em;
+  color: #444;
+  margin: 0 0 3em;
+}
+
+.title-block .circle-name {
+  font-size: 11pt;
+  letter-spacing: 0.15em;
+}
+
+/* 奥付 */
+.colophon {
+  font-size: 8.5pt;
+  line-height: 1.9;
+}
+
+.colophon dl {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.colophon dt {
+  font-weight: normal;
+  color: #555;
+}
+
+.colophon dd {
+  margin: 0 0 1em 0;
+}

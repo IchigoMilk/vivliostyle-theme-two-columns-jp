@@ -1,0 +1,19 @@
+{
+  "name": "vivliostyle-theme-tategaki-nidan",
+  "version": "0.1.0",
+  "description": "Vivliostyle theme for vertical A5 right-bound two-column novels",
+  "style": "./style.css",
+  "vivliostyle": {
+    "theme": {
+      "style": "./style.css"
+    }
+  },
+  "keywords": [
+    "vivliostyle",
+    "vivliostyle-theme"
+  ],
+  "files": [
+    "style.css"
+  ],
+  "private": true
+}
