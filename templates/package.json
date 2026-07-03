@@ -1,0 +1,16 @@
+{
+  "name": "my-novel-book",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Vivliostyle project for a vertical Japanese two-column novel",
+  "scripts": {
+    "build": "vivliostyle build --executable-browser /snap/bin/chromium",
+    "preview": "vivliostyle preview --executable-browser /snap/bin/chromium"
+  },
+  "dependencies": {
+    "vivliostyle-theme-two-columns-jp": "file:../../vivliostyle-theme-two-columns-jp"
+  },
+  "devDependencies": {
+    "@vivliostyle/cli": "^8.14.0"
+  }
+}
