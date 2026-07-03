@@ -1,4 +1,4 @@
-# vivliostyle-theme-tategaki-nidan
+# vivliostyle-theme-two-columns-jp
 
 A Vivliostyle theme for vertical A5, right-bound, two-column novels. This repository is intentionally generic and independent from any specific work.
 
@@ -17,7 +17,7 @@ Add this theme as a local dependency in the target book project's `package.json`
 ```json
 {
   "dependencies": {
-    "vivliostyle-theme-tategaki-nidan": "file:../../vivliostyle-theme-tategaki-nidan"
+    "vivliostyle-theme-two-columns-jp": "file:../../vivliostyle-theme-two-columns-jp"
   }
 }
 ```
@@ -26,12 +26,12 @@ In `vivliostyle.config.js`:
 
 ```js
 module.exports = {
-  theme: 'vivliostyle-theme-tategaki-nidan',
+  theme: 'vivliostyle-theme-two-columns-jp',
   // ...
 };
 ```
 
-After `npm install`, a symlink is created at `node_modules/vivliostyle-theme-tategaki-nidan`, and `theme.style` (`style.css`) is applied to book typesetting.
+After `npm install`, a symlink is created at `node_modules/vivliostyle-theme-two-columns-jp`, and `theme.style` (`style.css`) is applied to book typesetting.
 
 ## Customization
 
