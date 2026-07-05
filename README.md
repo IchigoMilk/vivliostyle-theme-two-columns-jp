@@ -1,6 +1,6 @@
 # vivliostyle-theme-two-columns-jp
 
-縦書き A5・右綴じ・二段組（上段/下段）向けの Vivliostyle テーマです。
+縦書き A5・右綴じ・二段組 (上段/下段) 向けの Vivliostyle テーマです。
 このリポジトリには、テーマ本体だけでなく「すぐ本文を書き始めるための執筆インストラクション」と「設定/扉/奥付のテンプレート」も同梱しています。
 
 ## まず何をすればいいか
@@ -22,25 +22,25 @@
 
 - `docs/WRITING_INSTRUCTIONS.md`
   - 執筆開始までの手順
-  - VFM での本文記法（章、場面転換、ルビ、挿絵、改ページ、縦中横）
-  - 不足フォントの導入（Shippori Mincho を Google Fonts などから取得）
+  - VFM での本文記法 (章、場面転換、ルビ、挿絵、改ページ、縦中横)
+  - 不足フォントの導入 (Shippori Mincho を Google Fonts などから取得)
   - ビルド/プレビュー運用
-  - よくある詰まりどころ（Chromium 指定）
+  - よくある詰まりどころ (Chromium 指定)
 
 ## 同梱テンプレート
 
-- `templates/package.json`（Vivliostyle CLI スクリプト付き）
-- `templates/vivliostyle.config.js`（`entry` / `output` / `theme` の雛形）
-- `templates/manuscripts/title.html`（扉ページ例）
-- `templates/manuscripts/colophon.html`（奥付例）
-- `templates/manuscripts/manuscript.md`（本文の最小サンプル）
+- `templates/package.json` (Vivliostyle CLI スクリプト付き)
+- `templates/vivliostyle.config.js` (`entry` / `output` / `theme` の雛形)
+- `templates/manuscripts/title.html` (扉ページ例)
+- `templates/manuscripts/colophon.html` (奥付例)
+- `templates/manuscripts/manuscript.md` (本文の最小サンプル)
 
 ## Theme Features
 
 - `writing-mode: vertical-rl` + `readingProgression: 'rtl'` を前提にした縦書き日本語組版
-- 二段組（`vertical-rl` では上段/下段方向に段が積まれる）
-- 場面転換（`---`）は罫線ではなく中央寄せの `＊　＊　＊` で表示
-- ルビ（`<ruby><rt>`）、挿絵（`<figure>`）、強制改ページ（`.page-break`）を標準でサポート
+- 二段組 (`vertical-rl` では上段/下段方向に段が積まれる)
+- 場面転換 (`---`) は罫線ではなく中央寄せの `＊　＊　＊` で表示
+- ルビ (`<ruby><rt>`) 、挿絵 (`<figure>`) 、強制改ページ (`.page-break`) を標準でサポート
 - 扉・奥付などの前後付は `column-span: all` で本文段組から分離し、ノンブルを非表示化
 
 ## Theme Usage (Existing Project)
@@ -69,9 +69,9 @@ module.exports = {
 
 調整ポイントは主に `style.css` です。
 
-- `body` の `font-size` / `line-height` / `columns` / `column-gap`（文字密度）
-- `@page` の `margin`（印刷所仕様への追従）
-- `.frontmatter` / `.backmatter`（扉・奥付ページ体裁）
+- `body` の `font-size` / `line-height` / `columns` / `column-gap` (文字密度)
+- `@page` の `margin` (印刷所仕様への追従)
+- `.frontmatter` / `.backmatter` (扉・奥付ページ体裁)
 
 フォントは環境依存で欠けやすいため、`docs/WRITING_INSTRUCTIONS.md` の
 「フォントを用意する (Shippori Mincho など)」に従って、
@@ -80,4 +80,4 @@ module.exports = {
 ## Known Limitations
 
 - `column-rule` は intentionally 不使用です。
-  Chromium で `column-span: all` 要素（扉・奥付・挿絵）を罫線が貫通する描画不具合があるため、段間は余白のみで表現しています。
+  Chromium で `column-span: all` 要素 (扉・奥付・挿絵) を罫線が貫通する描画不具合があるため、段間は余白のみで表現しています。
