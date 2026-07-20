@@ -38,6 +38,14 @@
   --text-color: #1a1a1a;
   --font-serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho",
     "YuMincho", "Noto Serif JP", serif;
+
+  /* 本文の段組数。既定は二段組。
+     本全体を一段組にしたい場合は、利用側で読み込む追加 CSS に
+       :root { --body-columns: 1; }
+     と書いて上書きする (vivliostyle.config.js の theme 配列に自分の CSS を
+     追加する方法は README「段組を切り替える」を参照)。
+     ページ単位で切り替えたいだけなら <body class="single-column"> を使う。 */
+  --body-columns: 2;
 }
 
 html {
@@ -60,12 +68,26 @@ body {
      沿って積まれるため、上段→下段の順に段が並ぶ。
      column-rule は Chromium で column-span:all 要素 (扉・奥付・挿絵) を貫通して
      描画されるバグがあるため使わず、余白のみで段を区切る */
-  columns: 2;
+  columns: var(--body-columns);
   column-gap: 9mm;
   column-fill: auto;
 
   height: 100%;
   margin: 0;
+}
+
+/* 段組をページ (文書) 単位で切り替えるユーティリティ。
+   本文とは別文書の扉・奥付などの <body> に付けて使う。
+   vertical-rl の二段組は上段・下段の横帯として積まれ、各段の高さがページ高の
+   約半分になるため、column-span: all の扉でもタイトルが半ページ分で改行されて
+   しまう。single-column にすればページ全高を使えて改行されにくくなる。
+   --body-columns による全体設定より優先される */
+body.single-column {
+  column-count: 1;
+}
+
+body.two-column {
+  column-count: 2;
 }
 
 /* 本文段落。原稿では行頭に全角スペースを直接入れる運用のため
