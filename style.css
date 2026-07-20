@@ -198,6 +198,14 @@ p > img {
   page: no-folio;
 }
 
+/* single-column ページ (扉・奥付) は中身を中央に置かず、本文と同じ開始位置
+   (縦書きなので右上の角) から組み始める。flex 中央揃えをやめて通常フローに戻す。
+   これで二段組の本文ページと扉・奥付の書き出し座標がそろう */
+body.single-column .frontmatter,
+body.single-column .backmatter {
+  display: block;
+}
+
 .title-block {
   text-align: center;
 }
