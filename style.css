@@ -13,15 +13,13 @@
   size: A5;
   margin: 20mm 16mm 18mm 16mm;
 
-  /* ノンブル (ページ番号) 。中央下に縦書きで小さく配置。
-     text-orientation: mixed だと数字が90度回転して寝てしまうため、
-     text-combine-upright で複数桁の数字を1マスに横並び (縦中横) にして立てる。
-     text-orientation は指定しない (combine された数字には無関係で、
-     残りのテキストは html 側の mixed を継承すればよい)  */
+  /* ノンブル (ページ番号) 。中央下に小さく配置。
+     本文は縦書きだが、ノンブルは横書き (horizontal-tb) にして数字を正立させる。
+     マージンボックスはページ内の固定位置に置かれるため、本文の writing-mode
+     とは独立に指定してよい。 */
   @bottom-center {
     content: counter(page);
-    writing-mode: vertical-rl;
-    text-combine-upright: digits 3;
+    writing-mode: horizontal-tb;
     font-size: 8pt;
     font-family: serif;
   }
